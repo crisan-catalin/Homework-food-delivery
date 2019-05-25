@@ -12,6 +12,6 @@ public class MainController {
 
     @GetMapping("/")
     public String getHomePage() {
-        return Views.MAIN_PAGE;
+        return Views.LOGIN_PAGE;
     }
 }
