@@ -6,10 +6,6 @@
     <h1 class="display-4">Hungry? You are welcome!</h1>
 </div>
 
-<div class="container">
-    <div class="card-deck mb-3 text-center">
-
-    </div>
-</div>
+<div class="flex-fill homepage-img-cover"></div>
 
 <jsp:include page="footer.jsp"></jsp:include>

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <footer class="pt-1 mt-md-5 pt-md-2 border-top">
         <div class="row text-center">
             <div class="col-6 col-md">
                 <h5>Food delivery</h5>

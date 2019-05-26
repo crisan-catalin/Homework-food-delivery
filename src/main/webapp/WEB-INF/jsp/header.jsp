@@ -15,23 +15,26 @@
     <link rel="stylesheet" href="../../resources/css/style.css">
 </head>
 
-<body>
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="navbar-brand text-dark">Food delivery | SIBIU</a>
-    </h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/cart/">
-            <i class="fas fa-shopping-cart"></i>Checkout your order
-        </a>
-    </nav>
+<body class="d-flex flex-column">
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <a href="/" class="navbar-brand">
+        <img class="nav-logo" src="../../resources/images/logo2.png">
+    </a>
 
-    <c:if test="${empty sessionUser.name}">
-        <a class="btn btn-outline-primary" href="#">Login</a>
-    </c:if>
-    <c:if test="${not empty sessionUser.name}">
-        <h6 class="mr-md-3 d-none d-md-block">|</h6>
-        <h6 class="pr-2 my-2 my-md-0">Welcome ${sessionUser.name}</h6>
-        <a class="btn btn-outline-primary" href="#">Logout</a>
-    </c:if>
+    <div class="d-flex flex-column flex-md-row">
+        <div class="align-self-center mr-md-4">
+            <a class="p-2 text-dark" href="/cart/">
+                <i class="fas fa-shopping-cart pr-md-2"></i> Checkout your order
+            </a>
+        </div>
 
+        <c:if test="${empty sessionUser.name}">
+            <a class="btn btn-outline-primary" href="#">Login</a>
+        </c:if>
+        <c:if test="${not empty sessionUser.name}">
+            <h6 class="mr-md-3 d-none d-md-block">|</h6>
+            <h6 class="pr-2 my-2 my-md-0">Welcome ${sessionUser.name}</h6>
+            <a class="btn btn-outline-primary" href="#">Logout</a>
+        </c:if>
+    </div>
 </div>
