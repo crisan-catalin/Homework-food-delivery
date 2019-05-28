@@ -1,5 +1,7 @@
 package com.example.fooddelivery.model;
 
+import com.example.fooddelivery.enums.DeliveryStatus;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;

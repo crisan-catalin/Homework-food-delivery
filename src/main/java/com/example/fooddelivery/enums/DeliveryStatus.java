@@ -1,4 +1,4 @@
-package com.example.fooddelivery.model;
+package com.example.fooddelivery.enums;
 
 public enum DeliveryStatus {
     PLACED,
