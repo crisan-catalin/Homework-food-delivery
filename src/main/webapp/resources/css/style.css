@@ -11,3 +11,16 @@ html, body {
     background-size: cover;
     background-position: bottom;
 }
+
+.product-card {
+    background: red;
+    border-radius: 5px;
+    background: #dee2e6;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+}
+.remove-product {
+    position: absolute;
+    right: 0px;
+}
