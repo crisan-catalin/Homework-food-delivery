@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="header.jsp"></jsp:include>
 
@@ -7,34 +8,20 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add product in basket</h5>
+                <h5 class="modal-title">Add something tasty in your basket!</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <select class="custom-select">
+                <form:select path="restaurants" class="custom-select js-restaurant-select">
                     <option selected disabled>Select restaurant</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                    <c:forEach items="${restaurants}" var="restaurant">
+                        <form:option value="${restaurant.id}" label="${restaurant.name}"/>
+                    </c:forEach>
+                </form:select>
 
-                <div class="row mt-4">
-                    <div class="col-4 col-lg-3">
-                        <div class="card text-center">
-                            <img src="https://via.placeholder.com/150" class="card-img-top">
-                            <div class="card-body">
-                                <b class="card-title">Pizza Quatro Fromaggi</b>
-                                <p class="card-text">Price: 20$</p>
-                                <div class="input-group">
-                                    <input type="number" min=0 class="form-control" placeholder="Quantity">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <div class="row js-product-container"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
