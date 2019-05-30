@@ -1,9 +1,12 @@
 $('.js-restaurant-select').change(function () {
-    var restaurantId = $(this).val();
+    const restaurantId = $(this).val();
+
+    const $productContainer = $('.js-product-container');
+    $productContainer.empty();
 
     $.get('/restaurant/' + restaurantId + '/products', function (products) {
         for (const product of products) {
-            $('.js-product-container').append(createProductComponent(product));
+            $productContainer.append(createProductComponent(product));
         }
     });
 
