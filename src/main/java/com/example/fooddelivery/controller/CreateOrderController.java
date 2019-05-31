@@ -2,6 +2,7 @@ package com.example.fooddelivery.controller;
 
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
+import com.example.fooddelivery.facade.impl.DefaultCartFacade;
 import com.example.fooddelivery.forms.OrderForm;
 import com.example.fooddelivery.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,10 @@ public class CreateOrderController {
     private static final String SESSION_PRODUCTS = "sessionProducts";
 
     @Autowired
-    RestaurantService restaurantService;
+    private RestaurantService restaurantService;
+
+    @Autowired
+    private DefaultCartFacade defaultCartFacade;
 
     @GetMapping()
     public String createOrder(Model model) {
@@ -41,7 +45,15 @@ public class CreateOrderController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/addProducts")
     public void addProductsToCart(@RequestBody List<ProductSessionDto> products, HttpSession session) {
-        session.setAttribute(SESSION_PRODUCTS, products);
+        List<ProductSessionDto> sessionProducts = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+
+        if (sessionProducts == null) {
+            session.setAttribute(SESSION_PRODUCTS, products);
+            return;
+        }
+
+        List<ProductSessionDto> mergedProducts = defaultCartFacade.mergeWithExistingProducts(sessionProducts, products);
+        session.setAttribute(SESSION_PRODUCTS, mergedProducts);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -49,7 +61,7 @@ public class CreateOrderController {
     public void deleteProductFromCart(@RequestBody ProductSessionDto product, HttpSession session) {
         List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
         List<ProductSessionDto> productsAfterRemoving = products.stream()
-                .filter(p -> !p.getId().equals(product.getId()) && p.getRestaurantId().equals(product.getRestaurantId()))
+                .filter(p -> !p.getId().equals(product.getId()))
                 .collect(Collectors.toList());
 
         session.setAttribute(SESSION_PRODUCTS, productsAfterRemoving);
