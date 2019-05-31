@@ -77,3 +77,21 @@ $('.js-products-add').click(function () {
         }
     }
 });
+
+$('.js-product-remove').click(function () {
+    const $productToRemove = $(this).parent().siblings('.js-product-data');
+    const productId = $productToRemove.find('input[name=product-id]').val();
+    const restaurantId = $productToRemove.find('input[name=restaurant-id]').val();
+
+    let product = {id: productId, restaurantId: restaurantId};
+
+    $.ajax({
+        type: 'DELETE',
+        url: '/order/removeProduct',
+        data: JSON.stringify(product),
+        contentType: "application/json; charset=utf-8",
+        success: function () {
+            location.reload();
+        }
+    })
+});

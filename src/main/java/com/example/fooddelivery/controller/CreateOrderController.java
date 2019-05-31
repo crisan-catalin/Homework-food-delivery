@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.fooddelivery.constants.Views.CREATE_ORDER_PAGE;
 
@@ -41,6 +42,17 @@ public class CreateOrderController {
     @PostMapping("/addProducts")
     public void addProductsToCart(@RequestBody List<ProductSessionDto> products, HttpSession session) {
         session.setAttribute(SESSION_PRODUCTS, products);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/removeProduct")
+    public void deleteProductFromCart(@RequestBody ProductSessionDto product, HttpSession session) {
+        List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+        List<ProductSessionDto> productsAfterRemoving = products.stream()
+                .filter(p -> !p.getId().equals(product.getId()) && p.getRestaurantId().equals(product.getRestaurantId()))
+                .collect(Collectors.toList());
+
+        session.setAttribute(SESSION_PRODUCTS, productsAfterRemoving);
     }
 
 }
