@@ -47,7 +47,7 @@
                     </div>
                     <form:input type="text" class="form-control" aria-describedby="delivery-address-city"
                                 required="required" minlength="3"
-                                path="city"/>
+                                value="${sessionAddress.city}" path="city"/>
                 </div>
                 <div class="row">
                     <div class="col-12 col-sm-7">
@@ -57,7 +57,7 @@
                             </div>
                             <form:input type="text" class="form-control" aria-describedby="delivery-address-street"
                                         required="required" minlength="3"
-                                        path="street"/>
+                                        value="${sessionAddress.street}" path="street"/>
                         </div>
 
                     </div>
@@ -68,7 +68,7 @@
                             </div>
                             <form:input type="text" class="form-control" aria-describedby="delivery-address-number"
                                         required="required" minlength="1"
-                                        path="number"/>
+                                        value="${sessionAddress.number}" path="number"/>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,8 @@
             <div class="col-12 col-md-8 col-lg-6">
                 <div class="d-flex justify-content-between">
                     <h2 class="pr-3">Products</h2>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addProductsModal">
+                    <button type="button" class="btn btn-warning js-update-address" data-toggle="modal"
+                            data-target="#addProductsModal">
                         <i class="fa fa-plus" aria-hidden="true"></i> Add product
                     </button>
                 </div>

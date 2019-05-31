@@ -1,3 +1,17 @@
+$('.js-update-address').click(function () {
+    const city = $('input[id=city]').val();
+    const street = $('input[id=street]').val();
+    const number = $('input[id=number]').val();
+    const address = {city: city, street: street, number: number};
+
+    $.ajax({
+        type: 'POST',
+        url: '/order/updateAddress',
+        data: JSON.stringify(address),
+        contentType: "application/json; charset=utf-8"
+    })
+});
+
 $('.js-restaurant-select').change(function () {
     const restaurantId = $(this).val();
 

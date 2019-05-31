@@ -26,6 +26,7 @@ public class CreateOrderController {
     private static final String RESTAURANTS = "restaurants";
     private static final String ADDED_PRODUCTS = "addedProducts";
     private static final String SESSION_PRODUCTS = "sessionProducts";
+    private static final String SESSION_ADDRESS = "sessionAddress";
     private static final String REDIRECT = "redirect:/";
 
     @Autowired
@@ -41,6 +42,12 @@ public class CreateOrderController {
         model.addAttribute(RESTAURANTS, defaultRestaurantService.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/updateAddress")
+    public void updateOrderAddress(@RequestBody AddressForm address, HttpSession session) {
+        session.setAttribute(SESSION_ADDRESS, address);
     }
 
     @ResponseStatus(HttpStatus.OK)
