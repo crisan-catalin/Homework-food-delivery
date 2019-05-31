@@ -20,7 +20,7 @@ html, body {
     border-color: black;
     border-style: solid;
 }
-.remove-product {
+.product-remove {
     position: absolute;
     right: 0px;
 }
