@@ -4,7 +4,7 @@ import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
 import com.example.fooddelivery.facade.impl.DefaultCartFacade;
 import com.example.fooddelivery.forms.OrderForm;
-import com.example.fooddelivery.service.RestaurantService;
+import com.example.fooddelivery.service.impl.DefaultRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class CreateOrderController {
     private static final String SESSION_PRODUCTS = "sessionProducts";
 
     @Autowired
-    private RestaurantService restaurantService;
+    private DefaultRestaurantService defaultRestaurantService;
 
     @Autowired
     private DefaultCartFacade defaultCartFacade;
@@ -37,7 +37,7 @@ public class CreateOrderController {
     public String createOrder(Model model) {
         model.addAttribute(ORDER_FORM, new OrderForm());
         model.addAttribute(ADDED_PRODUCTS, new ArrayList<ProductWithQuantityDto>());
-        model.addAttribute(RESTAURANTS, restaurantService.getRestaurantsName());
+        model.addAttribute(RESTAURANTS, defaultRestaurantService.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
     }
