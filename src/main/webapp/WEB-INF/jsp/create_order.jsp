@@ -3,7 +3,7 @@
 
 <jsp:include page="header.jsp"></jsp:include>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="addProductsModal" tabindex="-1" role="dialog" aria-labelledby="addProductsModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -25,7 +25,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Confirm <i class="fa fa-check" aria-hidden="true"></i>
+                <button type="button" class="btn btn-success js-products-add">
+                    Confirm <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
             </div>
         </div>

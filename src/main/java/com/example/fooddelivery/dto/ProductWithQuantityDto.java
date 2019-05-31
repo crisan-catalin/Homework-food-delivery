@@ -6,6 +6,9 @@ public class ProductWithQuantityDto {
     private Long price;
     private Integer quantity;
 
+    public ProductWithQuantityDto() {
+    }
+
     public ProductWithQuantityDto(Long id, String name, Long price, Integer quantity) {
         this.id = id;
         this.name = name;
