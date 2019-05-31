@@ -28,7 +28,7 @@ public class Address {
 
     @NotNull
     @Column
-    private Integer number;
+    private String number;
 
     @OneToMany(mappedBy = "address")
     private Set<User> users;
@@ -63,11 +63,11 @@ public class Address {
         this.street = street;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

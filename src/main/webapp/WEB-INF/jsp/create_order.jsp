@@ -36,7 +36,7 @@
 
 
 <div class="container flex-fill create-order-background-right">
-    <form:form method="post" action="/order/create" modelAttribute="orderForm">
+    <form:form method="post" action="/order/create" modelAttribute="addressForm">
         <div class="row">
             <div class="col-12 col-md-8 col-lg-6">
 
@@ -47,7 +47,7 @@
                     </div>
                     <form:input type="text" class="form-control" aria-describedby="delivery-address-city"
                                 required="required" minlength="3"
-                                path="address.city"/>
+                                path="city"/>
                 </div>
                 <div class="row">
                     <div class="col-12 col-sm-7">
@@ -57,7 +57,7 @@
                             </div>
                             <form:input type="text" class="form-control" aria-describedby="delivery-address-street"
                                         required="required" minlength="3"
-                                        path="address.street"/>
+                                        path="street"/>
                         </div>
 
                     </div>
@@ -68,7 +68,7 @@
                             </div>
                             <form:input type="text" class="form-control" aria-describedby="delivery-address-number"
                                         required="required" minlength="1"
-                                        path="address.number"/>
+                                        path="number"/>
                         </div>
                     </div>
                 </div>

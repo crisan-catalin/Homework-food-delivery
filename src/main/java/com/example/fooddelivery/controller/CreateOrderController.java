@@ -3,7 +3,7 @@ package com.example.fooddelivery.controller;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
 import com.example.fooddelivery.facade.impl.DefaultCartFacade;
-import com.example.fooddelivery.forms.OrderForm;
+import com.example.fooddelivery.forms.AddressForm;
 import com.example.fooddelivery.service.impl.DefaultRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,11 @@ import static com.example.fooddelivery.constants.Views.CREATE_ORDER_PAGE;
 @RequestMapping("/order")
 public class CreateOrderController {
 
-    private static final String ORDER_FORM = "orderForm";
+    private static final String ADDRESS_FORM = "addressForm";
     private static final String RESTAURANTS = "restaurants";
     private static final String ADDED_PRODUCTS = "addedProducts";
     private static final String SESSION_PRODUCTS = "sessionProducts";
+    private static final String REDIRECT = "redirect:/";
 
     @Autowired
     private DefaultRestaurantService defaultRestaurantService;
@@ -35,7 +36,7 @@ public class CreateOrderController {
 
     @GetMapping()
     public String createOrder(Model model) {
-        model.addAttribute(ORDER_FORM, new OrderForm());
+        model.addAttribute(ADDRESS_FORM, new AddressForm());
         model.addAttribute(ADDED_PRODUCTS, new ArrayList<ProductWithQuantityDto>());
         model.addAttribute(RESTAURANTS, defaultRestaurantService.getRestaurantsNameAndId());
 
@@ -67,4 +68,13 @@ public class CreateOrderController {
         session.setAttribute(SESSION_PRODUCTS, productsAfterRemoving);
     }
 
+    @PostMapping("/create")
+    public String submit(@ModelAttribute(ADDRESS_FORM) AddressForm addressForm, HttpSession session) {
+        List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+
+        defaultCartFacade.createOrder(products, addressForm);
+        session.removeAttribute(SESSION_PRODUCTS);
+
+        return REDIRECT + "order-placed";
+    }
 }

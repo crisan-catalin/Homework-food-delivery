@@ -18,7 +18,6 @@ public class Order {
     @JoinColumn
     private User customer;
 
-    @NotNull
     @ManyToOne
     @JoinColumn
     private User livrator;
@@ -28,7 +27,7 @@ public class Order {
     private Long totalPrice;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Address deliveryAddress;
 
@@ -36,7 +35,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
-    @OneToMany(mappedBy = "order")
+    @NotNull
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderEntry> orderEntries;
 
 
