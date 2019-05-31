@@ -35,7 +35,7 @@
 </div>
 
 
-<div class="container flex-fill">
+<div class="container flex-fill create-order-background-right">
     <form:form method="post" action="/order/create" modelAttribute="orderForm">
         <div class="row">
             <div class="col-12 col-md-8 col-lg-6">

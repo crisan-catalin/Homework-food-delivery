@@ -20,7 +20,14 @@ html, body {
     border-color: black;
     border-style: solid;
 }
+
 .product-remove {
     position: absolute;
     right: 0px;
+}
+
+.create-order-background-right {
+    background: url(/resources/images/cart-background-right.png);
+    background-repeat: no-repeat;
+    background-position: right;
 }
