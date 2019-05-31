@@ -5,9 +5,11 @@ public class ProductSessionDto {
     private String name;
     private Long price;
     private Integer quantity;
+    private Long restaurantId;
     private String restaurantName;
 
-    public ProductSessionDto(){}
+    public ProductSessionDto() {
+    }
 
 
     public Long getId() {
@@ -40,6 +42,14 @@ public class ProductSessionDto {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public String getRestaurantName() {

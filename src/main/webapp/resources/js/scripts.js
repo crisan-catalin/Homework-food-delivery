@@ -53,20 +53,27 @@ $('.js-products-add').click(function () {
                     name: productName,
                     price: productPrice,
                     quantity: productQty,
+                    restaurantId: $selectedRestaurantId,
                     restaurantName: selectedRestaurantName
                 };
                 products.push(productJSON);
             }
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/order/addProducts',
-            data: JSON.stringify(products),
-            contentType: "application/json; charset=utf-8",
-            success: function () {
-                location.reload();
-            }
-        })
+        if (products.length > 0) {
+            saveProductsOnSession(products);
+        }
+
+        function saveProductsOnSession(products) {
+            $.ajax({
+                type: 'POST',
+                url: '/order/addProducts',
+                data: JSON.stringify(products),
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    location.reload();
+                }
+            })
+        }
     }
 });
