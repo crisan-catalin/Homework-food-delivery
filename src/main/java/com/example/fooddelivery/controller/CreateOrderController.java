@@ -1,5 +1,6 @@
 package com.example.fooddelivery.controller;
 
+import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
 import com.example.fooddelivery.forms.OrderForm;
 import com.example.fooddelivery.service.RestaurantService;
@@ -38,7 +39,7 @@ public class CreateOrderController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/addProducts")
-    public void addProductsToCart(@RequestBody List<ProductWithQuantityDto> products, HttpSession session) {
+    public void addProductsToCart(@RequestBody List<ProductSessionDto> products, HttpSession session) {
         session.setAttribute(SESSION_PRODUCTS, products);
     }
 

@@ -31,9 +31,10 @@ $('.js-restaurant-select').change(function () {
 });
 
 $('.js-products-add').click(function () {
-    const $selectedRestaurant = $('.js-restaurant-select').val();
+    const $selectedRestaurantId = $('.js-restaurant-select').val();
 
-    if ($selectedRestaurant !== null) {
+    if ($selectedRestaurantId !== null) {
+        const selectedRestaurantName = $('.js-restaurant-select option:selected').text();
         const $productContainer = $('.js-product-container');
         const $productsForm = $productContainer.parent();
         $productsForm.submit();
@@ -47,7 +48,13 @@ $('.js-products-add').click(function () {
                 const productId = $(product).find('input[name=product-id]').val();
                 const productName = $(product).find('input[name=product-name]').val();
                 const productPrice = $(product).find('input[name=product-price]').val();
-                let productJSON = {id: productId, name: productName, price: productPrice, quantity: productQty};
+                let productJSON = {
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    quantity: productQty,
+                    restaurantName: selectedRestaurantName
+                };
                 products.push(productJSON);
             }
         }
@@ -58,7 +65,7 @@ $('.js-products-add').click(function () {
             data: JSON.stringify(products),
             contentType: "application/json; charset=utf-8",
             success: function () {
-                $('#addProductsModal').modal('hide')
+                location.reload();
             }
         })
     }

@@ -81,23 +81,26 @@
                         Add product
                     </button>
                 </div>
-                <div class="product-card p-3 mt-2">
-                    <div class="row">
-                        <div class="col-8">
-                            <span>Product name</span> (x<span>2</span>)
-                            <div class="pt-2 d-flex justify-content-between">
-                                <span>Restaurant name</span>
-                                <span>Price: 30$</span>
+
+                <c:forEach items="${sessionProducts}" var="product">
+                    <div class="product-card p-3 mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                <span><b>Product:</b> ${product.name}</span> <span><small>(Qty x ${product.quantity})</small></span>
+                                <div class="pt-2 d-flex justify-content-between">
+                                    <span><b>Restaurant:</b> ${product.restaurantName}</span>
+                                    <span><b>Price:</b> ${product.price} $</span>
+                                </div>
+                            </div>
+
+                            <div class="col-2 offset-2">
+                                <button class="btn btn-danger remove-product mr-3">
+                                    Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
                             </div>
                         </div>
-
-                        <div class="col-2 offset-2">
-                            <button class="btn btn-danger remove-product mr-3">Remove <i class="fa fa-trash"
-                                                                                         aria-hidden="true"></i>
-                            </button>
-                        </div>
                     </div>
-                </div>
+                </c:forEach>
             </div>
         </div>
         <div class="row">
