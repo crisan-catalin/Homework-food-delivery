@@ -119,7 +119,8 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-8 col-lg-6">
-                <button type="submit" class="btn btn-success btn-block">
+                <button type="submit" class="btn btn-success btn-block"
+                    ${fn:length(sessionProducts)  > 0 ? '' : 'disabled'} >
                     Confirm order <i class="fa fa-chevron-right" aria-hidden="true"></i>
                 </button>
             </div>
