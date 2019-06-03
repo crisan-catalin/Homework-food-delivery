@@ -17,7 +17,7 @@ public class DefaultProductService implements ProductService {
 
     @Override
     public List<ProductWithQuantityDto> getProductsForRestaurantId(Long restaurantId) {
-        return productRepository.findAllByRestaurant_Id(restaurantId).stream()
+        return productRepository.findAllByRestaurantId(restaurantId).stream()
                 .map(product -> new ProductWithQuantityDto(product.getId(), product.getName(), product.getPrice(), 0))
                 .collect(Collectors.toList());
     }
