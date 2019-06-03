@@ -6,7 +6,7 @@ html, body {
     width: 200px;
 }
 
-.homepage-img-cover {
+.homepage-background {
     background: url(/resources/images/home-background.jpg);
     background-size: cover;
     background-position: bottom;
