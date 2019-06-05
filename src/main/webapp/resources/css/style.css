@@ -45,3 +45,10 @@ html, body {
     background-size: contain;
     background-position: center;
 }
+
+.error-background {
+    background: url(/resources/images/error.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
