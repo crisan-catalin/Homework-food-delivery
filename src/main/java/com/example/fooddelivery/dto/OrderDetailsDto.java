@@ -4,9 +4,18 @@ import java.util.Set;
 
 public class OrderDetailsDto {
 
+    private Boolean orderAvailable;
     private ContactDetailsDto customerDetails;
     private Set<OrderEntriesByRestaurantDto> orderEntriesByRestaurant;
     private Long totalPrice;
+
+    public Boolean getOrderAvailable() {
+        return orderAvailable;
+    }
+
+    public void setOrderAvailable(Boolean orderAvailable) {
+        this.orderAvailable = orderAvailable;
+    }
 
     public ContactDetailsDto getCustomerDetails() {
         return customerDetails;

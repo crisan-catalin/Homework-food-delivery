@@ -82,6 +82,7 @@ public class DefaultOrderFacade implements OrderFacade {
         if (order.isPresent()) {
             Order customerOrder = order.get();
             OrderDetailsDto orderDetails = new OrderDetailsDto();
+            orderDetails.setOrderAvailable(DeliveryStatus.PLACED.equals(customerOrder.getDeliveryStatus()));
             orderDetails.setCustomerDetails(orderService.getContactDetails(customerOrder));
             orderDetails.setTotalPrice(customerOrder.getTotalPrice());
             orderDetails.setOrderEntriesByRestaurant(orderService.getOrderEntriesByRestaurantDtos(customerOrder.getOrderEntries()));

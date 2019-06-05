@@ -2,6 +2,7 @@ package com.example.fooddelivery.service.impl;
 
 import com.example.fooddelivery.dto.*;
 import com.example.fooddelivery.enums.DeliveryStatus;
+import com.example.fooddelivery.exceptions.EntityNotFoundException;
 import com.example.fooddelivery.model.Address;
 import com.example.fooddelivery.model.Order;
 import com.example.fooddelivery.model.OrderEntry;
@@ -19,6 +20,17 @@ public class DefaultOrderService implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    public void updateOrderStatus(Long orderId, DeliveryStatus status) throws EntityNotFoundException {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            Order givenOrder = order.get();
+            givenOrder.setDeliveryStatus(status);
+            orderRepository.save(givenOrder);
+            return;
+        }
+        throw new EntityNotFoundException();
+    }
 
     @Override
     public List<OrderListDto> getOpenOrders() {

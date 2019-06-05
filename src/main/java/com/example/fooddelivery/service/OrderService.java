@@ -3,6 +3,8 @@ package com.example.fooddelivery.service;
 import com.example.fooddelivery.dto.ContactDetailsDto;
 import com.example.fooddelivery.dto.OrderEntriesByRestaurantDto;
 import com.example.fooddelivery.dto.OrderListDto;
+import com.example.fooddelivery.enums.DeliveryStatus;
+import com.example.fooddelivery.exceptions.EntityNotFoundException;
 import com.example.fooddelivery.model.Order;
 import com.example.fooddelivery.model.OrderEntry;
 
@@ -14,6 +16,15 @@ import java.util.Set;
  * OrderService for basic order operations.
  */
 public interface OrderService {
+
+    /**
+     * Update order status
+     *
+     * @param orderId order id
+     * @param status  order new status
+     * @throws EntityNotFoundException
+     */
+    void updateOrderStatus(Long orderId, DeliveryStatus status) throws EntityNotFoundException;
 
     /**
      * Get all orders with status {@link com.example.fooddelivery.enums.DeliveryStatus} PLACED

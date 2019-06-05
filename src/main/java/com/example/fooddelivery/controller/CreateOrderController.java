@@ -3,6 +3,7 @@ package com.example.fooddelivery.controller;
 import com.example.fooddelivery.constants.Views;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
+import com.example.fooddelivery.enums.DeliveryStatus;
 import com.example.fooddelivery.facade.CartFacade;
 import com.example.fooddelivery.facade.OrderFacade;
 import com.example.fooddelivery.forms.AddressForm;
@@ -28,6 +29,7 @@ public class CreateOrderController {
     private static final String ADDRESS_FORM = "addressForm";
     private static final String RESTAURANTS = "restaurants";
     private static final String ADDED_PRODUCTS = "addedProducts";
+    private static final String ORDER_ID = "orderId";
     private static final String ORDERS_LIST = "ordersList";
     private static final String ORDER_DETAILS = "orderDetails";
     private static final String SESSION_PRODUCTS = "sessionProducts";
@@ -59,6 +61,7 @@ public class CreateOrderController {
     public String getOrder(@PathVariable("orderId") String orderId, Model model) {
         try {
             model.addAttribute(ORDER_DETAILS, orderFacade.getOrderDetails(Long.parseLong(orderId)));
+            model.addAttribute(ORDER_ID, orderId);
             return ORDER_DETAILS_PAGE;
         } catch (Exception e) {
             return ERROR_PAGE;
@@ -115,5 +118,16 @@ public class CreateOrderController {
         session.removeAttribute(SESSION_PRODUCTS);
 
         return REDIRECT + "order/order-placed";
+    }
+
+    @PostMapping("/process")
+    public String processOrder(@RequestParam(name = ORDER_ID) String orderId) {
+        try {
+            //TODO: Update order livrator after @Colea implement user
+            orderService.updateOrderStatus(Long.parseLong(orderId), DeliveryStatus.IN_PROGRESS);
+            return REDIRECT;
+        } catch (Exception e) {
+            return ERROR_PAGE;
+        }
     }
 }

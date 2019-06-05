@@ -1,4 +1,5 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <jsp:include page="header.jsp"/>
 
@@ -45,7 +46,12 @@
                         <span class="text-right">${orderDetails.totalPrice} $</span>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-warning btn-block">Take order ></button>
+                        <form:form action="/order/process" method="post">
+                            <input type="hidden" value="${orderId}" name="orderId">
+                            <button class="btn btn-warning btn-block" ${orderDetails.orderAvailable? '' : 'disabled'}>
+                                Take order >
+                            </button>
+                        </form:form>
                     </div>
                 </div>
             </div>
