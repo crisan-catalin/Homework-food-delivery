@@ -3,13 +3,11 @@ package com.example.fooddelivery.controller;
 import com.example.fooddelivery.constants.Views;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
-import com.example.fooddelivery.enums.DeliveryStatus;
-import com.example.fooddelivery.facade.impl.DefaultCartFacade;
+import com.example.fooddelivery.facade.CartFacade;
+import com.example.fooddelivery.facade.OrderFacade;
 import com.example.fooddelivery.forms.AddressForm;
-import com.example.fooddelivery.model.Order;
-import com.example.fooddelivery.repository.OrderRepository;
 import com.example.fooddelivery.service.OrderService;
-import com.example.fooddelivery.service.impl.DefaultRestaurantService;
+import com.example.fooddelivery.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -37,10 +35,10 @@ public class CreateOrderController {
     private static final String REDIRECT = "redirect:/";
 
     @Autowired
-    private DefaultRestaurantService defaultRestaurantService;
+    private RestaurantService restaurantService;
 
     @Autowired
-    private DefaultCartFacade defaultCartFacade;
+    private CartFacade cartFacade;
 
     @Autowired
     private OrderService orderService;
@@ -49,7 +47,7 @@ public class CreateOrderController {
     public String createOrder(Model model) {
         model.addAttribute(ADDRESS_FORM, new AddressForm());
         model.addAttribute(ADDED_PRODUCTS, new ArrayList<ProductWithQuantityDto>());
-        model.addAttribute(RESTAURANTS, defaultRestaurantService.getRestaurantsNameAndId());
+        model.addAttribute(RESTAURANTS, restaurantService.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
     }
@@ -81,7 +79,7 @@ public class CreateOrderController {
             return;
         }
 
-        List<ProductSessionDto> mergedProducts = defaultCartFacade.mergeWithExistingProducts(sessionProducts, products);
+        List<ProductSessionDto> mergedProducts = cartFacade.mergeWithExistingProducts(sessionProducts, products);
         session.setAttribute(SESSION_PRODUCTS, mergedProducts);
     }
 
@@ -100,7 +98,7 @@ public class CreateOrderController {
     public String submit(@ModelAttribute(ADDRESS_FORM) AddressForm addressForm, HttpSession session) {
         List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
 
-        defaultCartFacade.createOrder(products, addressForm);
+        orderFacade.createOrder(products, addressForm);
         session.removeAttribute(SESSION_PRODUCTS);
 
         return REDIRECT + "order/order-placed";
