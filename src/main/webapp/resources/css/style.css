@@ -1,0 +1,13 @@
+html, body {
+    height: 100vh;
+}
+
+.nav-logo {
+    width: 200px;
+}
+
+.homepage-background {
+    background: url(/resources/images/home-background.jpg);
+    background-size: cover;
+    background-position: bottom;
+}
