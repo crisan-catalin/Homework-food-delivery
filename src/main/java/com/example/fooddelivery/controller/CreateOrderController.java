@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.fooddelivery.constants.Views.CREATE_ORDER_PAGE;
-import static com.example.fooddelivery.constants.Views.ORDERS_LIST_PAGE;
+import static com.example.fooddelivery.constants.Views.*;
 
 @Controller
 @RequestMapping("/order")
@@ -30,6 +29,7 @@ public class CreateOrderController {
     private static final String RESTAURANTS = "restaurants";
     private static final String ADDED_PRODUCTS = "addedProducts";
     private static final String ORDERS_LIST = "ordersList";
+    private static final String ORDER_DETAILS = "orderDetails";
     private static final String SESSION_PRODUCTS = "sessionProducts";
     private static final String SESSION_ADDRESS = "sessionAddress";
     private static final String REDIRECT = "redirect:/";
@@ -43,6 +43,9 @@ public class CreateOrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderFacade orderFacade;
+
     @GetMapping()
     public String createOrder(Model model) {
         model.addAttribute(ADDRESS_FORM, new AddressForm());
@@ -50,6 +53,16 @@ public class CreateOrderController {
         model.addAttribute(RESTAURANTS, restaurantService.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
+    }
+
+    @GetMapping("/details/{orderId}")
+    public String getOrder(@PathVariable("orderId") String orderId, Model model) {
+        try {
+            model.addAttribute(ORDER_DETAILS, orderFacade.getOrderDetails(Long.parseLong(orderId)));
+            return ORDER_DETAILS_PAGE;
+        } catch (Exception e) {
+            return ERROR_PAGE;
+        }
     }
 
     @GetMapping("/list")

@@ -52,3 +52,24 @@ html, body {
     background-size: contain;
     background-position: center;
 }
+
+.customer-details-block {
+    margin-bottom: 20px;
+}
+
+.customer-details-block--properties {
+    padding-left: 20px;
+    font-size: 14px;
+}
+
+.order-entry-block {
+    background: lightskyblue;
+    border-left: 5px solid dodgerblue;
+    padding-left: 20px;
+}
+
+.order-entry-block--properties {
+    font-size: 14px;
+    padding-left: 15px;
+
+}
