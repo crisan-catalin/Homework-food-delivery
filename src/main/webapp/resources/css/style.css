@@ -32,6 +32,13 @@ html, body {
     background-position: right;
 }
 
+.order-list-background-left {
+    background: url(/resources/images/order-list-background-left.png);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-attachment: fixed;
+}
+
 .order-placed-background {
     background: url(/resources/images/order-placed.png);
     background-repeat: no-repeat;

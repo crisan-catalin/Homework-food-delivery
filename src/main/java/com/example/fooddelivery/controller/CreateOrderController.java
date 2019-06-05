@@ -1,9 +1,14 @@
 package com.example.fooddelivery.controller;
 
+import com.example.fooddelivery.constants.Views;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
+import com.example.fooddelivery.enums.DeliveryStatus;
 import com.example.fooddelivery.facade.impl.DefaultCartFacade;
 import com.example.fooddelivery.forms.AddressForm;
+import com.example.fooddelivery.model.Order;
+import com.example.fooddelivery.repository.OrderRepository;
+import com.example.fooddelivery.service.OrderService;
 import com.example.fooddelivery.service.impl.DefaultRestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.fooddelivery.constants.Views.CREATE_ORDER_PAGE;
+import static com.example.fooddelivery.constants.Views.ORDERS_LIST_PAGE;
 
 @Controller
 @RequestMapping("/order")
@@ -25,6 +31,7 @@ public class CreateOrderController {
     private static final String ADDRESS_FORM = "addressForm";
     private static final String RESTAURANTS = "restaurants";
     private static final String ADDED_PRODUCTS = "addedProducts";
+    private static final String ORDERS_LIST = "ordersList";
     private static final String SESSION_PRODUCTS = "sessionProducts";
     private static final String SESSION_ADDRESS = "sessionAddress";
     private static final String REDIRECT = "redirect:/";
@@ -35,6 +42,9 @@ public class CreateOrderController {
     @Autowired
     private DefaultCartFacade defaultCartFacade;
 
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping()
     public String createOrder(Model model) {
         model.addAttribute(ADDRESS_FORM, new AddressForm());
@@ -42,6 +52,17 @@ public class CreateOrderController {
         model.addAttribute(RESTAURANTS, defaultRestaurantService.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
+    }
+
+    @GetMapping("/list")
+    public String getOrdersList(Model model) {
+        model.addAttribute(ORDERS_LIST, orderService.getOpenOrders());
+        return ORDERS_LIST_PAGE;
+    }
+
+    @GetMapping("/order-placed")
+    public String getOrderPlaced() {
+        return Views.ORDER_PLACED_PAGE;
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -82,6 +103,6 @@ public class CreateOrderController {
         defaultCartFacade.createOrder(products, addressForm);
         session.removeAttribute(SESSION_PRODUCTS);
 
-        return REDIRECT + "order-placed";
+        return REDIRECT + "order/order-placed";
     }
 }
