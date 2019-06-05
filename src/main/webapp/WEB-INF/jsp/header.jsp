@@ -24,7 +24,7 @@
     <div class="d-flex flex-column flex-md-row">
         <div class="align-self-center mr-md-4">
             <a class="p-2 text-dark" href="/order">
-                <i class="fas fa-shopping-cart pr-md-2"></i> Checkout your order
+                <i class="fas fa-shopping-cart pr-md-2"></i> Place an order
             </a>
         </div>
 
