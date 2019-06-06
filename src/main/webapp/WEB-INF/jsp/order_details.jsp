@@ -3,7 +3,7 @@
 
 <jsp:include page="header.jsp"/>
 
-<div class="p-3 mt-2">
+<div class="flex-fill p-3 mt-2">
     <div class="row">
         <div class="col-8 offset-2">
             <div class="customer-details-block border-bottom pb-4">
@@ -48,8 +48,8 @@
                     <div class="col-6">
                         <form:form action="/order/process" method="post">
                             <input type="hidden" value="${orderId}" name="orderId">
-                            <button class="btn btn-warning btn-block" ${orderDetails.orderAvailable? '' : 'disabled'}>
-                                Take order >
+                            <button class="btn btn-block ${orderDetails.orderAvailable? 'btn-warning' : 'btn-danger'}" ${orderDetails.orderAvailable? '' : 'disabled'}>
+                                    ${orderDetails.orderAvailable? 'Take order >' : 'Order was already processed'}
                             </button>
                         </form:form>
                     </div>
