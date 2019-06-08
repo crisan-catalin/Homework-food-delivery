@@ -1,0 +1,40 @@
+html, body {
+    height: 100vh;
+}
+
+.nav-logo {
+    width: 200px;
+}
+
+.homepage-background {
+    background: url(/resources/images/home-background.jpg);
+    background-size: cover;
+    background-position: bottom;
+}
+
+.product-card {
+    background: red;
+    border-radius: 5px;
+    background: #dee2e6;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+.product-remove {
+    position: absolute;
+    right: 0px;
+}
+
+.create-order-background-right {
+    background: url(/resources/images/cart-background-right.png);
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.order-placed-background {
+    background: url(/resources/images/order-placed.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
