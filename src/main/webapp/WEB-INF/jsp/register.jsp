@@ -11,7 +11,27 @@
         <div class="col-5 my-auto">
             <div class="card bg-light">
                 <div class="card-body">
-                    <form:form method="post" action="/login" modelAttribute="logInUserForm">
+                    <form:form method="post" action="/register" modelAttribute="registerForm">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <form:input type="text" class="form-control" id="name" path="name" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Phone:</label>
+                            <form:input type="number" class="form-control" id="phone" path="phone" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">City:</label>
+                            <form:input type="text" class="form-control" id="city" path="address.city" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Street:</label>
+                            <form:input type="text" class="form-control" id="street" path="address.street" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Number:</label>
+                            <form:input type="text" class="form-control" id="number" path="address.number" required="required"/>
+                        </div>
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <form:input type="text" class="form-control" id="email" path="email" required="required"/>
@@ -30,7 +50,7 @@
                                     ${errorMessage}
                             </div>
                         </c:if>
-                        <button type="submit" class="btn btn-primary col-12">Login</button>
+                        <button type="submit" class="btn btn-primary col-12">Register</button>
                     </form:form>
                 </div>
             </div>

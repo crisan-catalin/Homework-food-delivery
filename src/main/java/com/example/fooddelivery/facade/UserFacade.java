@@ -2,6 +2,7 @@ package com.example.fooddelivery.facade;
 
 import com.example.fooddelivery.dto.SessionUserDto;
 import com.example.fooddelivery.forms.LogInUserForm;
+import com.example.fooddelivery.forms.RegisterForm;
 
 /**
  * UserFacade used for general user operations.
@@ -15,4 +16,12 @@ public interface UserFacade {
      * @return {@link SessionUserDto} if combination of email and password from form exists in DB
      */
     SessionUserDto logInUser(LogInUserForm logInUserForm);
+
+    /**
+     * Register a new user
+     *
+     * @param registerForm the register form which contains new user's information
+     * @return {@link Boolean} true if user was registered successfully, false otherwise
+     */
+    boolean registerUser(RegisterForm registerForm);
 }

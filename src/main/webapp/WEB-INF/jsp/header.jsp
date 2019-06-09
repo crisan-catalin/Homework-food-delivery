@@ -30,7 +30,12 @@
 
         <c:choose>
             <c:when test="${empty sessionUser.name}">
-                <a class="btn btn-outline-primary" href="/login">Login</a>
+                <div class="p-2">
+                    <a class="btn btn-outline-primary" href="/login">Login</a>
+                </div>
+                <div class="p-2">
+                    <a class="btn btn-outline-primary" href="/register">Register</a>
+                </div>
             </c:when>
             <c:otherwise>
                 <h6 class="mr-md-3 d-none d-md-block">|</h6>

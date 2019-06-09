@@ -17,4 +17,9 @@ public class DefaultUserService implements UserService {
     public User getUserByEmailAndPassword(String email, String password) {
         return userRepository.findUserByEmailAndPassword(email, password);
     }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
