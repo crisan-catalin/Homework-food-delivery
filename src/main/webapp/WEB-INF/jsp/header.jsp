@@ -30,12 +30,12 @@
 
         <c:choose>
             <c:when test="${empty sessionUser.name}">
-                <a class="btn btn-outline-primary" href="#">Login</a>
+                <a class="btn btn-outline-primary" href="/login">Login</a>
             </c:when>
             <c:otherwise>
                 <h6 class="mr-md-3 d-none d-md-block">|</h6>
                 <h6 class="pr-2 my-2 my-md-0">Welcome ${sessionUser.name}</h6>
-                <a class="btn btn-outline-primary" href="#">Logout</a>
+                <a class="btn btn-outline-primary" href="/logout">Logout</a>
             </c:otherwise>
         </c:choose>
     </div>
