@@ -11,7 +11,7 @@ import com.example.fooddelivery.service.UserService;
 public class DefaultUserService implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public User getUserByEmailAndPassword(String email, String password) {

@@ -13,10 +13,10 @@ import com.example.fooddelivery.service.UserService;
 public class DefaultUserFacade implements UserFacade {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
 
     @Override
     public SessionUserDto logInUser(LogInUserForm logInUserForm) {
@@ -30,7 +30,7 @@ public class DefaultUserFacade implements UserFacade {
 
     @Override
     public boolean registerUser(RegisterForm registerForm) {
-        User savedUser = userService.save(convert(registerForm));
+        User savedUser = userService.save(convertRegisterFormToUser(registerForm));
         return savedUser != null;
     }
 
@@ -41,7 +41,7 @@ public class DefaultUserFacade implements UserFacade {
         return sessionUserDto;
     }
 
-    private User convert(RegisterForm registerForm) {
+    private User convertRegisterFormToUser(RegisterForm registerForm) {
         User user = new User();
         user.setName(registerForm.getName());
         user.setPhone(registerForm.getPhone());

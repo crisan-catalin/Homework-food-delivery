@@ -30,7 +30,7 @@ public class MainController {
     private static final String REDIRECT = "redirect:/";
 
     @Autowired
-    DefaultUserFacade defaultUserFacade;
+    private DefaultUserFacade defaultUserFacade;
 
     @GetMapping("/")
     public String getHomePage() {
