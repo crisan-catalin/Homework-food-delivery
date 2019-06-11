@@ -6,6 +6,7 @@ import com.example.fooddelivery.dto.ProductWithQuantityDto;
 import com.example.fooddelivery.enums.DeliveryStatus;
 import com.example.fooddelivery.facade.CartFacade;
 import com.example.fooddelivery.facade.OrderFacade;
+import com.example.fooddelivery.facade.RestaurantFacade;
 import com.example.fooddelivery.forms.AddressForm;
 import com.example.fooddelivery.service.OrderService;
 import com.example.fooddelivery.service.RestaurantService;
@@ -37,7 +38,7 @@ public class CreateOrderController {
     private static final String REDIRECT = "redirect:/";
 
     @Autowired
-    private RestaurantService restaurantService;
+    private RestaurantFacade restaurantFacade;
 
     @Autowired
     private CartFacade cartFacade;
@@ -52,7 +53,7 @@ public class CreateOrderController {
     public String createOrder(Model model) {
         model.addAttribute(ADDRESS_FORM, new AddressForm());
         model.addAttribute(ADDED_PRODUCTS, new ArrayList<ProductWithQuantityDto>());
-        model.addAttribute(RESTAURANTS, restaurantService.getRestaurantsNameAndId());
+        model.addAttribute(RESTAURANTS, restaurantFacade.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
     }

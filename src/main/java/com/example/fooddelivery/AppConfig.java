@@ -2,10 +2,7 @@ package com.example.fooddelivery;
 
 import com.example.fooddelivery.facade.CartFacade;
 import com.example.fooddelivery.facade.OrderFacade;
-import com.example.fooddelivery.facade.impl.DefaultCartFacade;
-import com.example.fooddelivery.facade.impl.DefaultOrderFacade;
-import com.example.fooddelivery.facade.impl.DefaultUserFacade;
-
+import com.example.fooddelivery.facade.impl.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,9 +30,19 @@ public class AppConfig implements WebMvcConfigurer {
         return new DefaultUserFacade();
     }
 
+    @Bean
+    public DefaultRestaurantFacade restaurantFacade() {
+        return new DefaultRestaurantFacade();
+    }
+
+    @Bean
+    public DefaultProductFacade productFacade() {
+        return new DefaultProductFacade();
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
-            .addResourceLocations("/resources/");
+                .addResourceLocations("/resources/");
     }
 }
