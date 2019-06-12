@@ -82,6 +82,6 @@ public class CreateOrderController {
         defaultCartFacade.createOrder(products, addressForm);
         session.removeAttribute(SESSION_PRODUCTS);
 
-        return REDIRECT + "order-placed";
+        return REDIRECT + "orders/order-placed";
     }
 }

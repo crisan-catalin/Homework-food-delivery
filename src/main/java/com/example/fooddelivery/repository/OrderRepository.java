@@ -1,7 +1,14 @@
 package com.example.fooddelivery.repository;
 
-import com.example.fooddelivery.model.Order;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.fooddelivery.model.Order;
+
+public interface OrderRepository extends CrudRepository<Order, Long> {
+
+    List<Order> getOrdersByCustomerId(Long id);
+
+    List<Order> getOrdersByLivratorId(Long id);
 }

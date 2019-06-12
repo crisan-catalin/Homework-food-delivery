@@ -16,10 +16,15 @@
 </head>
 
 <body class="d-flex flex-column">
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <a href="/" class="navbar-brand">
-        <img class="nav-logo" src="/resources/images/logo2.png">
-    </a>
+<nav class="navbar d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <div class="d-flex">
+        <a href="/" class="navbar-brand">
+            <img class="nav-logo" src="/resources/images/logo2.png">
+        </a>
+        <c:if test="${not empty sessionUser}">
+            <a class="btn btn-outline-primary align-self-center" href="/orders">Orders</a>
+        </c:if>
+    </div>
 
     <div class="d-flex flex-column flex-md-row">
         <div class="align-self-center mr-md-4">
@@ -44,4 +49,4 @@
             </c:otherwise>
         </c:choose>
     </div>
-</div>
+</nav>

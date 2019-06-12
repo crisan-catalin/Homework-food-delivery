@@ -1,6 +1,7 @@
 package com.example.fooddelivery;
 
 import com.example.fooddelivery.facade.impl.DefaultCartFacade;
+import com.example.fooddelivery.facade.impl.DefaultOrderFacade;
 import com.example.fooddelivery.facade.impl.DefaultUserFacade;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,6 +24,11 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public DefaultUserFacade userFacade() {
         return new DefaultUserFacade();
+    }
+
+    @Bean
+    public DefaultOrderFacade orderFacade() {
+        return new DefaultOrderFacade();
     }
 
     @Override

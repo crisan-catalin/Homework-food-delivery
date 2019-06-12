@@ -6,4 +6,5 @@ public class Views {
     public static final String CREATE_ORDER_PAGE = "create_order";
     public static final String ORDER_PLACED_PAGE = "order_placed";
     public static final String REGISTER_PAGE = "register";
+    public static final String ORDERS_PAGE = "orders";
 }
