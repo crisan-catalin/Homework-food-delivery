@@ -32,8 +32,6 @@ public class CreateOrderController {
     private static final String ORDER_ID = "orderId";
     private static final String ORDERS_LIST = "ordersList";
     private static final String ORDER_DETAILS = "orderDetails";
-    private static final String SESSION_PRODUCTS = "sessionProducts";
-    private static final String SESSION_ADDRESS = "sessionAddress";
     private static final String REDIRECT = "redirect:/";
 
     @Autowired
@@ -79,32 +77,32 @@ public class CreateOrderController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/updateAddress")
     public void updateOrderAddress(@RequestBody AddressForm address, HttpSession session) {
-        session.setAttribute(SESSION_ADDRESS, address);
+        session.setAttribute(Session.ADDRESS, address);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/addProducts")
     public void addProductsToCart(@RequestBody List<ProductSessionDto> products, HttpSession session) {
-        List<ProductSessionDto> sessionProducts = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+        List<ProductSessionDto> sessionProducts = (List<ProductSessionDto>) session.getAttribute(Session.PRODUCTS);
 
         if (sessionProducts == null) {
-            session.setAttribute(SESSION_PRODUCTS, products);
+            session.setAttribute(Session.PRODUCTS, products);
             return;
         }
 
         List<ProductSessionDto> mergedProducts = cartFacade.mergeWithExistingProducts(sessionProducts, products);
-        session.setAttribute(SESSION_PRODUCTS, mergedProducts);
+        session.setAttribute(Session.PRODUCTS, mergedProducts);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/removeProduct")
     public void deleteProductFromCart(@RequestBody ProductSessionDto product, HttpSession session) {
-        List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+        List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(Session.PRODUCTS);
         List<ProductSessionDto> productsAfterRemoving = products.stream()
                 .filter(p -> !p.getId().equals(product.getId()))
                 .collect(Collectors.toList());
 
-        session.setAttribute(SESSION_PRODUCTS, productsAfterRemoving);
+        session.setAttribute(Session.PRODUCTS, productsAfterRemoving);
     }
 
     @PostMapping("/create")
@@ -114,10 +112,10 @@ public class CreateOrderController {
         }
 
         try {
-            final List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+            final List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(Session.PRODUCTS);
             final SessionUserDto sessionUserDto = (SessionUserDto) session.getAttribute(Session.USER);
             orderFacade.createOrder(sessionUserDto.getId(), products, addressForm);
-            session.removeAttribute(SESSION_PRODUCTS);
+            session.removeAttribute(Session.PRODUCTS);
 
             return REDIRECT + "order/order-placed";
         } catch (Exception e) {
