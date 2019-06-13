@@ -40,6 +40,11 @@ public class AppConfig implements WebMvcConfigurer {
         return new DefaultProductFacade();
     }
 
+    @Bean
+    public DefaultAddressFacade addressFacade() {
+        return new DefaultAddressFacade();
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")

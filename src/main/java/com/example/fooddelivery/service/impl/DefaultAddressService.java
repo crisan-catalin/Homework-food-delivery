@@ -14,16 +14,6 @@ public class DefaultAddressService implements AddressService {
     private AddressRepository addressRepository;
 
     @Override
-    public Address convertAddress(AddressForm addressForm) {
-        Address address = new Address();
-        address.setCity(addressForm.getCity());
-        address.setStreet(addressForm.getStreet());
-        address.setNumber(addressForm.getNumber());
-
-        return address;
-    }
-
-    @Override
     public Address save(Address address) {
         return addressRepository.save(address);
     }

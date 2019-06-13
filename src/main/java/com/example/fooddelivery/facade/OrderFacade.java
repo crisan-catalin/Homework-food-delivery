@@ -1,6 +1,7 @@
 package com.example.fooddelivery.facade;
 
 import com.example.fooddelivery.dto.OrderDetailsDto;
+import com.example.fooddelivery.dto.OrderListDto;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.exceptions.EntityNotFoundException;
 import com.example.fooddelivery.forms.AddressForm;
@@ -10,12 +11,31 @@ import java.util.List;
 public interface OrderFacade {
 
     /**
-     * Create order based on user form
+     * Start the order processing by setting the {@link com.example.fooddelivery.enums.DeliveryStatus#IN_PROGRESS} and the livrator based on id
      *
-     * @param products list of {@link ProductSessionDto} products
-     * @param address  delivery address
+     * @param livratorId the livrator id
+     * @param orderId    the order id
+     * @throws EntityNotFoundException when the livrator or the order is not found
      */
-    void createOrder(List<ProductSessionDto> products, AddressForm address);
+    void startOrderProcessing(Long livratorId, Long orderId) throws EntityNotFoundException;
+
+
+    /**
+     * Get all orders with status {@link com.example.fooddelivery.enums.DeliveryStatus#PLACED}
+     *
+     * @return list of {@link OrderListDto}
+     */
+    List<OrderListDto> getOpenOrders();
+
+    /**
+     * Create an order based on the user id, products and user address
+     *
+     * @param userId   the customer id
+     * @param products the products
+     * @param address  the customer address
+     * @throws EntityNotFoundException when customer is not found
+     */
+    void createOrder(Long userId, List<ProductSessionDto> products, AddressForm address) throws EntityNotFoundException;
 
     /**
      * Create dto based on order information

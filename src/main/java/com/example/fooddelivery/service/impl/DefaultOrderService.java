@@ -1,16 +1,18 @@
 package com.example.fooddelivery.service.impl;
 
-import com.example.fooddelivery.dto.*;
 import com.example.fooddelivery.enums.DeliveryStatus;
 import com.example.fooddelivery.exceptions.EntityNotFoundException;
 import com.example.fooddelivery.model.Address;
 import com.example.fooddelivery.model.Order;
 import com.example.fooddelivery.model.OrderEntry;
 import com.example.fooddelivery.model.User;
+import com.example.fooddelivery.repository.AddressRepository;
 import com.example.fooddelivery.repository.OrderRepository;
+import com.example.fooddelivery.repository.UserRepository;
 import com.example.fooddelivery.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,11 +23,38 @@ public class DefaultOrderService implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public void updateOrderStatus(Long orderId, DeliveryStatus status) throws EntityNotFoundException {
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    @Transactional
+    public void createOrder(User customer, Address customerAddress, Set<OrderEntry> entries) {
+        Order order = new Order();
+        order.setDeliveryStatus(DeliveryStatus.PLACED);
+        order.setCustomer(customer);
+        order.setDeliveryAddress(customerAddress);
+
+        entries.forEach(entry -> entry.setOrder(order));
+        order.setOrderEntries(entries);
+
+        Long orderTotalPrice = entries.stream()
+                .mapToLong(entry -> entry.getProduct().getPrice() * entry.getQuantity()).sum();
+        order.setTotalPrice(orderTotalPrice);
+
+        addressRepository.save(customerAddress);
+        orderRepository.save(order);
+    }
+
+    public void startOrderProcessing(Long livratorId, Long orderId) throws EntityNotFoundException {
+        Optional<User> livrator = userRepository.findById(livratorId);
         Optional<Order> order = orderRepository.findById(orderId);
-        if (order.isPresent()) {
+        if (livrator.isPresent() && order.isPresent()) {
             Order givenOrder = order.get();
-            givenOrder.setDeliveryStatus(status);
+            givenOrder.setDeliveryStatus(DeliveryStatus.IN_PROGRESS);
+            givenOrder.setLivrator(livrator.get());
             orderRepository.save(givenOrder);
             return;
         }
@@ -33,13 +62,8 @@ public class DefaultOrderService implements OrderService {
     }
 
     @Override
-    public List<OrderListDto> getOpenOrders() {
-        List<Order> orders = orderRepository.findAllByDeliveryStatusOrderByIdDesc(DeliveryStatus.PLACED);
-
-        return orders.stream()
-                .map(order -> new OrderListDto(order.getId(), order.getCustomer().getName(), order.getTotalPrice(),
-                        new AddressDto(order.getDeliveryAddress().getCity(), order.getDeliveryAddress().getStreet(), order.getDeliveryAddress().getNumber())))
-                .collect(Collectors.toList());
+    public List<Order> getOpenOrders() {
+        return orderRepository.findAllByDeliveryStatusOrderByIdDesc(DeliveryStatus.PLACED);
     }
 
     @Override
@@ -48,35 +72,7 @@ public class DefaultOrderService implements OrderService {
     }
 
     @Override
-    public ContactDetailsDto getContactDetails(Order order) {
-        User user = order.getCustomer();
-        Address deliveryAddress = order.getDeliveryAddress();
-        AddressDto userAddressDto = new AddressDto(deliveryAddress.getCity(), deliveryAddress.getStreet(), deliveryAddress.getNumber());
-        return new ContactDetailsDto(user.getName(), user.getPhone(), userAddressDto);
-    }
-
-    @Override
-    public Set<OrderEntriesByRestaurantDto> getOrderEntriesByRestaurantDtos(Set<OrderEntry> orderEntries) {
-        Map<String, Set<OrderEntry>> orderEntriesGroupedByRestaurantName = getOrderEntriesGroupedByRestaurantName(orderEntries);
-        Set<OrderEntriesByRestaurantDto> orderEntriesByRestaurantDtos = new HashSet<>(orderEntriesGroupedByRestaurantName.size());
-
-        for (Map.Entry<String, Set<OrderEntry>> entry : orderEntriesGroupedByRestaurantName.entrySet()) {
-            OrderEntriesByRestaurantDto orderEntriesByRestaurant = new OrderEntriesByRestaurantDto();
-            orderEntriesByRestaurant.setRestaurantName(entry.getKey());
-            orderEntriesByRestaurant.setProducts(
-                    entry.getValue().stream()
-                            .map(orderEntry -> new ProductWithQuantityDto(orderEntry.getId(),
-                                    orderEntry.getProduct().getName(),
-                                    orderEntry.getProduct().getPrice(),
-                                    orderEntry.getQuantity()))
-                            .collect(Collectors.toSet())
-            );
-            orderEntriesByRestaurantDtos.add(orderEntriesByRestaurant);
-        }
-        return orderEntriesByRestaurantDtos;
-    }
-
-    private Map<String, Set<OrderEntry>> getOrderEntriesGroupedByRestaurantName(Set<OrderEntry> orderEntries) {
+    public Map<String, Set<OrderEntry>> getOrderEntriesGroupedByRestaurantName(Set<OrderEntry> orderEntries) {
         return orderEntries.stream()
                 .collect(Collectors.groupingBy(orderEntry -> orderEntry.getProduct().getRestaurant().getName(), Collectors.toSet()));
     }

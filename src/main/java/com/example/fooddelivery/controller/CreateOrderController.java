@@ -1,15 +1,14 @@
 package com.example.fooddelivery.controller;
 
+import com.example.fooddelivery.constants.Session;
 import com.example.fooddelivery.constants.Views;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
-import com.example.fooddelivery.enums.DeliveryStatus;
+import com.example.fooddelivery.dto.SessionUserDto;
 import com.example.fooddelivery.facade.CartFacade;
 import com.example.fooddelivery.facade.OrderFacade;
 import com.example.fooddelivery.facade.RestaurantFacade;
 import com.example.fooddelivery.forms.AddressForm;
-import com.example.fooddelivery.service.OrderService;
-import com.example.fooddelivery.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -44,9 +43,6 @@ public class CreateOrderController {
     private CartFacade cartFacade;
 
     @Autowired
-    private OrderService orderService;
-
-    @Autowired
     private OrderFacade orderFacade;
 
     @GetMapping()
@@ -71,7 +67,7 @@ public class CreateOrderController {
 
     @GetMapping("/list")
     public String getOrdersList(Model model) {
-        model.addAttribute(ORDERS_LIST, orderService.getOpenOrders());
+        model.addAttribute(ORDERS_LIST, orderFacade.getOpenOrders());
         return ORDERS_LIST_PAGE;
     }
 
@@ -113,19 +109,27 @@ public class CreateOrderController {
 
     @PostMapping("/create")
     public String submit(@ModelAttribute(ADDRESS_FORM) AddressForm addressForm, HttpSession session) {
-        List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+        if (session.getAttribute(Session.USER) == null) {
+            return REDIRECT + LOGIN_PAGE;
+        }
 
-        orderFacade.createOrder(products, addressForm);
-        session.removeAttribute(SESSION_PRODUCTS);
+        try {
+            final List<ProductSessionDto> products = (List<ProductSessionDto>) session.getAttribute(SESSION_PRODUCTS);
+            final SessionUserDto sessionUserDto = (SessionUserDto) session.getAttribute(Session.USER);
+            orderFacade.createOrder(sessionUserDto.getId(), products, addressForm);
+            session.removeAttribute(SESSION_PRODUCTS);
 
-        return REDIRECT + "order/order-placed";
+            return REDIRECT + "order/order-placed";
+        } catch (Exception e) {
+            return ERROR_PAGE;
+        }
     }
 
     @PostMapping("/process")
-    public String processOrder(@RequestParam(name = ORDER_ID) String orderId) {
+    public String processOrder(@RequestParam(name = ORDER_ID) String orderId, HttpSession session) {
         try {
-            //TODO: Update order livrator after @Colea implement user
-            orderService.updateOrderStatus(Long.parseLong(orderId), DeliveryStatus.IN_PROGRESS);
+            final SessionUserDto sessionUserDto = (SessionUserDto) session.getAttribute(Session.USER);
+            orderFacade.startOrderProcessing(sessionUserDto.getId(), Long.parseLong(orderId));
             return REDIRECT;
         } catch (Exception e) {
             return ERROR_PAGE;

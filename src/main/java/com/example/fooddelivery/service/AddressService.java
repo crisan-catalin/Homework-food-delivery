@@ -9,17 +9,9 @@ import com.example.fooddelivery.model.Address;
 public interface AddressService {
 
     /**
-     * Convert {@link AddressForm} to {@link Address}
-     *
-     * @param addressForm form model
-     * @return address entity
-     */
-    Address convertAddress(AddressForm addressForm);
-
-    /**
      * Save address via AddressRepository
      *
-     * @param address entity
+     * @param address the address
      * @return saved entity
      */
     Address save(Address address);
