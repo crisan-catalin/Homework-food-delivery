@@ -16,7 +16,7 @@ public class DefaultAddressFacade implements AddressFacade {
 
         return address;
     }
-
+  
     @Override
     public AddressDto convertToAddressDto(Address address) {
         return new AddressDto(address.getCity(), address.getStreet(), address.getNumber());
