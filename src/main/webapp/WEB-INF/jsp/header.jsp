@@ -21,9 +21,6 @@
         <a href="/" class="navbar-brand">
             <img class="nav-logo" src="/resources/images/logo2.png">
         </a>
-        <c:if test="${not empty sessionUser}">
-            <a class="btn btn-outline-primary align-self-center" href="/orders">Orders</a>
-        </c:if>
     </div>
 
     <div class="d-flex flex-column flex-md-row align-self-center">
@@ -50,11 +47,11 @@
                                         Welcome <b class="pr-2 my-2 my-md-0"> ${sessionUser.name}</b>
                     </span>
                     <div class="dropdown-menu" aria-labelledby="userpanel-dropdown">
-                        <a class="dropdown-item" href="/">Pending orders</a>
-                        <a class="dropdown-item" href="/">Orders history</a>
+                        <a class="dropdown-item" href="/orders/pending">Pending orders</a>
+                        <a class="dropdown-item" href="/orders">Orders history</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/order/list">Browse open orders</a>
-                        <a class="dropdown-item" href="/">Orders to deliver</a>
+                        <a class="dropdown-item" href="/orders/taken">Orders to deliver</a>
                     </div>
                 </div>
                 <a class="btn btn-outline-primary" href="/logout">Logout</a>
