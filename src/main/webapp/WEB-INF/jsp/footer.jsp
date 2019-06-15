@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <footer class="pt-1 mt-md-5 pt-md-2 border-top">
         <div class="row text-center">
-            <div class="col-6 col-md">
+            <div class="col-12 col-md-6">
                 <h5>Food delivery</h5>
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="#">Our story</a></li>
                 </ul>
             </div>
-            <div class="col-12 col-md">
+            <div class="col-12 col-md-6">
                 <small class="d-block mb-3 text-muted">&copy;2019</small>
             </div>
         </div>

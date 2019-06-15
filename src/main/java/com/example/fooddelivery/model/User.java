@@ -17,7 +17,7 @@ public class User {
 
     @NotNull
     @Column
-    private Integer phone;
+    private String phone;
 
     @NotNull
     @Column
@@ -53,11 +53,11 @@ public class User {
         this.name = name;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

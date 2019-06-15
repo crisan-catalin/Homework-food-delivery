@@ -1,6 +1,7 @@
 package com.example.fooddelivery.service;
 
 import com.example.fooddelivery.dto.RestaurantDto;
+import com.example.fooddelivery.model.Restaurant;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface RestaurantService {
      *
      * @return list of {@link RestaurantDto}
      */
-    List<RestaurantDto> getRestaurantsNameAndId();
+    List<Restaurant> findAll();
 }

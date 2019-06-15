@@ -3,7 +3,7 @@ package com.example.fooddelivery.forms;
 public class RegisterForm {
 
     private String name;
-    private Integer phone;
+    private String phone;
     private String email;
     private String password;
     private AddressForm address;
@@ -16,11 +16,11 @@ public class RegisterForm {
         this.name = name;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
