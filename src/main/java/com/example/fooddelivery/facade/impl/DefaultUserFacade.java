@@ -1,16 +1,19 @@
 package com.example.fooddelivery.facade.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.example.fooddelivery.dto.SessionUserDto;
+import com.example.fooddelivery.facade.AddressFacade;
 import com.example.fooddelivery.facade.UserFacade;
 import com.example.fooddelivery.forms.LogInUserForm;
 import com.example.fooddelivery.forms.RegisterForm;
 import com.example.fooddelivery.model.User;
 import com.example.fooddelivery.service.AddressService;
 import com.example.fooddelivery.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class DefaultUserFacade implements UserFacade {
+
+    @Autowired
+    private AddressFacade addressFacade;
 
     @Autowired
     private UserService userService;
@@ -47,7 +50,7 @@ public class DefaultUserFacade implements UserFacade {
         user.setPhone(registerForm.getPhone());
         user.setEmail(registerForm.getEmail());
         user.setPassword(registerForm.getPassword());
-        user.setAddress(addressService.save(addressService.convertAddress(registerForm.getAddress())));
+        user.setAddress(addressService.save(addressFacade.convertToAddress(registerForm.getAddress())));
         return user;
     }
 }

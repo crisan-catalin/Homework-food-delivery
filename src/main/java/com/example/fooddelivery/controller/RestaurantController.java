@@ -1,9 +1,12 @@
 package com.example.fooddelivery.controller;
 
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
-import com.example.fooddelivery.service.impl.DefaultProductService;
+import com.example.fooddelivery.facade.ProductFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -12,10 +15,10 @@ import java.util.List;
 public class RestaurantController {
 
     @Autowired
-    DefaultProductService defaultProductService;
+    ProductFacade productFacade;
 
     @GetMapping("/{restaurantId}/products")
     public List<ProductWithQuantityDto> getProductsForRestaurant(@PathVariable("restaurantId") String restaurantId) {
-        return defaultProductService.getProductsForRestaurantId(Long.parseLong(restaurantId));
+        return productFacade.getProductsForRestaurantId(Long.parseLong(restaurantId));
     }
 }
