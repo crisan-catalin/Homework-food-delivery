@@ -23,7 +23,7 @@
         </a>
     </div>
 
-    <div class="d-flex flex-column flex-md-row align-self-center">
+    <div class="d-flex flex-column flex-md-row align-self-center align-items-center">
         <div class="mr-md-4">
             <a class="p-2 text-dark" href="/order">
                 <i class="fas fa-shopping-cart pr-md-2"></i> Place an order
