@@ -42,11 +42,9 @@ public class DefaultOrderFacade implements OrderFacade {
     @Override
     public List<OrderListDto> getOpenOrders() {
         return orderService.getOpenOrders().stream()
-                .map(order -> new OrderListDto(order.getId(), order.getCustomer().getName(), order.getTotalPrice(),
-                        new AddressDto(order.getDeliveryAddress().getCity(),
-                                order.getDeliveryAddress().getStreet(),
-                                order.getDeliveryAddress().getNumber())))
-                .collect(Collectors.toList());
+            .map(order -> new OrderListDto(order.getId(), order.getCustomer().getName(), order.getTotalPrice(),
+                addressFacade.convertToAddressDto(order.getDeliveryAddress())))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -79,8 +77,7 @@ public class DefaultOrderFacade implements OrderFacade {
 
     private ContactDetailsDto getContactDetails(Order order) {
         User user = order.getCustomer();
-        Address deliveryAddress = order.getDeliveryAddress();
-        AddressDto userAddressDto = new AddressDto(deliveryAddress.getCity(), deliveryAddress.getStreet(), deliveryAddress.getNumber());
+        AddressDto userAddressDto = addressFacade.convertToAddressDto(order.getDeliveryAddress());
         return new ContactDetailsDto(user.getName(), user.getPhone(), userAddressDto);
     }
 
@@ -92,16 +89,45 @@ public class DefaultOrderFacade implements OrderFacade {
             OrderEntriesByRestaurantDto orderEntriesByRestaurant = new OrderEntriesByRestaurantDto();
             orderEntriesByRestaurant.setRestaurantName(entry.getKey());
             orderEntriesByRestaurant.setProducts(
-                    entry.getValue().stream()
-                            .map(orderEntry -> new ProductWithQuantityDto(orderEntry.getId(),
-                                    orderEntry.getProduct().getName(),
-                                    orderEntry.getProduct().getPrice(),
-                                    orderEntry.getQuantity()))
-                            .collect(Collectors.toSet())
+                entry.getValue().stream()
+                    .map(orderEntry -> new ProductWithQuantityDto(orderEntry.getId(),
+                        orderEntry.getProduct().getName(),
+                        orderEntry.getProduct().getPrice(),
+                        orderEntry.getQuantity()))
+                    .collect(Collectors.toSet())
             );
             orderEntriesByRestaurantDtos.add(orderEntriesByRestaurant);
         }
 
         return orderEntriesByRestaurantDtos;
+    }
+
+    @Override
+    public List<OrderDto> getOrders(SessionUserDto user) {
+        List<Order> orders = orderService.getOrdersByUserId(user.getId());
+        return orders.stream().map(this::convertToOrderDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderDto> getPendingOrders(SessionUserDto user) {
+        List<Order> orders = orderService.getOrdersByUserId(user.getId());
+        return orders.stream()
+            .filter(order -> order.getDeliveryStatus().equals(DeliveryStatus.PLACED))
+            .map(this::convertToOrderDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderDto> getTakenOrders(SessionUserDto user) {
+        List<Order> orders = orderService.getOrdersByLivratorId(user.getId());
+        return orders.stream().map(this::convertToOrderDto).collect(Collectors.toList());
+    }
+
+    private OrderDto convertToOrderDto(Order order) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(order.getId());
+        orderDto.setDeliveryStatus(order.getDeliveryStatus());
+        orderDto.setDeliveryAddress(order.getDeliveryAddress());
+        orderDto.setTotalPrice(order.getTotalPrice());
+        return orderDto;
     }
 }

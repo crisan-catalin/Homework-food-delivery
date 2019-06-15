@@ -20,9 +20,9 @@ public interface OrderService {
     /**
      * Create an order based on the customer, address and order entries
      *
-     * @param customer        the user
+     * @param customer the user
      * @param customerAddress the address
-     * @param entries         the order entries
+     * @param entries the order entries
      */
     void createOrder(User customer, Address customerAddress, Set<OrderEntry> entries);
 
@@ -30,7 +30,7 @@ public interface OrderService {
      * Update order status
      *
      * @param livratorId
-     * @param orderId    order id
+     * @param orderId order id
      * @throws EntityNotFoundException
      */
     void startOrderProcessing(Long livratorId, Long orderId) throws EntityNotFoundException;
@@ -57,4 +57,20 @@ public interface OrderService {
      * @return dictionary of restaurants name and entries for each restaurant
      */
     Map<String, Set<OrderEntry>> getOrderEntriesGroupedByRestaurantName(Set<OrderEntry> orderEntries);
+
+    /**
+     * Get orders for a given user id
+     *
+     * @param id the user id
+     * @return {@link List<Order>} orders
+     */
+    List<Order> getOrdersByUserId(Long id);
+
+    /**
+     * Get orders for a given livrator id
+     *
+     * @param id the livrator id
+     * @return {@link List<Order>} orders
+     */
+    List<Order> getOrdersByLivratorId(Long id);
 }

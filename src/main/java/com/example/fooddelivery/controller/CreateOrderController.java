@@ -116,8 +116,7 @@ public class CreateOrderController {
             final SessionUserDto sessionUserDto = (SessionUserDto) session.getAttribute(Session.USER);
             orderFacade.createOrder(sessionUserDto.getId(), products, addressForm);
             session.removeAttribute(Session.PRODUCTS);
-
-            return REDIRECT + "order/order-placed";
+            return REDIRECT + "orders/order-placed";
         } catch (Exception e) {
             return ERROR_PAGE;
         }

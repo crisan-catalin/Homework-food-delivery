@@ -16,12 +16,14 @@
 </head>
 
 <body class="d-flex flex-column">
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <a href="/" class="navbar-brand">
-        <img class="nav-logo" src="/resources/images/logo2.png">
-    </a>
+<nav class="navbar d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <div class="d-flex">
+        <a href="/" class="navbar-brand">
+            <img class="nav-logo" src="/resources/images/logo2.png">
+        </a>
+    </div>
 
-    <div class="d-flex flex-column flex-md-row align-self-center">
+    <div class="d-flex flex-column flex-md-row align-self-center align-items-center">
         <div class="mr-md-4">
             <a class="p-2 text-dark" href="/order">
                 <i class="fas fa-shopping-cart pr-md-2"></i> Place an order
@@ -45,15 +47,15 @@
                                         Welcome <b class="pr-2 my-2 my-md-0"> ${sessionUser.name}</b>
                     </span>
                     <div class="dropdown-menu" aria-labelledby="userpanel-dropdown">
-                        <a class="dropdown-item" href="/">Pending orders</a>
-                        <a class="dropdown-item" href="/">Orders history</a>
+                        <a class="dropdown-item" href="/orders/pending">Pending orders</a>
+                        <a class="dropdown-item" href="/orders">Orders history</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/order/list">Browse open orders</a>
-                        <a class="dropdown-item" href="/">Orders to deliver</a>
+                        <a class="dropdown-item" href="/orders/taken">Orders to deliver</a>
                     </div>
                 </div>
                 <a class="btn btn-outline-primary" href="/logout">Logout</a>
             </c:otherwise>
         </c:choose>
     </div>
-</div>
+</nav>

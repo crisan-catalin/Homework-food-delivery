@@ -76,4 +76,14 @@ public class DefaultOrderService implements OrderService {
         return orderEntries.stream()
                 .collect(Collectors.groupingBy(orderEntry -> orderEntry.getProduct().getRestaurant().getName(), Collectors.toSet()));
     }
+  
+    @Override
+    public List<Order> getOrdersByUserId(Long id) {
+        return orderRepository.getOrdersByCustomerId(id);
+    }
+
+    @Override
+    public List<Order> getOrdersByLivratorId(Long id) {
+        return orderRepository.getOrdersByLivratorId(id);
+    }
 }
