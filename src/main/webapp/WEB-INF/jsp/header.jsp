@@ -50,7 +50,7 @@
                         <a class="dropdown-item" href="/orders/pending">Pending orders</a>
                         <a class="dropdown-item" href="/orders">Orders history</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/order/list">Browse open orders</a>
+                        <a class="dropdown-item" href="/orders/list">Browse open orders</a>
                         <a class="dropdown-item" href="/orders/taken">Orders to deliver</a>
                     </div>
                 </div>

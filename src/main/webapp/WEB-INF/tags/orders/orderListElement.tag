@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-8">
                     <small>
-                        <a href="/order/details/${order.id}">#${order.id}</a> posted by ${order.customerName}
+                        <a href="/orders/details/${order.id}">#${order.id}</a> posted by ${order.customerName}
                     </small>
                     <div class="pt-2 d-flex justify-content-between">
                         <div class="d-flex flex-column">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-4 d-flex align-items-center">
-                    <a href="/order/details/${order.id}">
+                    <a href="/orders/details/${order.id}">
                         <button type="button"
                                 class="btn btn-primary product-remove mr-3 js-product-remove">
                             <i class="fa fa-info" aria-hidden="true"></i> Order details

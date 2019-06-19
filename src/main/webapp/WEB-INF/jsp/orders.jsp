@@ -20,7 +20,7 @@
                     <td>${order.totalPrice}</td>
                     <td>${order.deliveryStatus}</td>
                     <td><a class="btn ${order.deliveryStatus eq 'PLACED' ? 'btn-outline-primary' : (order.deliveryStatus eq 'IN_PROGRESS' ? 'btn-outline-warning' : 'btn-outline-success')}"
-                           href="/order/details/${order.id}">Details</a></td>
+                           href="/orders/details/${order.id}">Details</a></td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -1,7 +1,6 @@
 package com.example.fooddelivery.controller;
 
 import com.example.fooddelivery.constants.Session;
-import com.example.fooddelivery.constants.Views;
 import com.example.fooddelivery.dto.ProductSessionDto;
 import com.example.fooddelivery.dto.ProductWithQuantityDto;
 import com.example.fooddelivery.dto.SessionUserDto;
@@ -24,14 +23,12 @@ import static com.example.fooddelivery.constants.Views.*;
 
 @Controller
 @RequestMapping("/order")
-public class CreateOrderController {
+public class OrderProcessorController {
 
     private static final String ADDRESS_FORM = "addressForm";
     private static final String RESTAURANTS = "restaurants";
     private static final String ADDED_PRODUCTS = "addedProducts";
     private static final String ORDER_ID = "orderId";
-    private static final String ORDERS_LIST = "ordersList";
-    private static final String ORDER_DETAILS = "orderDetails";
     private static final String REDIRECT = "redirect:/";
 
     @Autowired
@@ -50,28 +47,6 @@ public class CreateOrderController {
         model.addAttribute(RESTAURANTS, restaurantFacade.getRestaurantsNameAndId());
 
         return CREATE_ORDER_PAGE;
-    }
-
-    @GetMapping("/details/{orderId}")
-    public String getOrder(@PathVariable("orderId") String orderId, Model model) {
-        try {
-            model.addAttribute(ORDER_DETAILS, orderFacade.getOrderDetails(Long.parseLong(orderId)));
-            model.addAttribute(ORDER_ID, orderId);
-            return ORDER_DETAILS_PAGE;
-        } catch (Exception e) {
-            return ERROR_PAGE;
-        }
-    }
-
-    @GetMapping("/list")
-    public String getOrdersList(Model model) {
-        model.addAttribute(ORDERS_LIST, orderFacade.getOpenOrders());
-        return ORDERS_LIST_PAGE;
-    }
-
-    @GetMapping("/order-placed")
-    public String getOrderPlaced() {
-        return Views.ORDER_PLACED_PAGE;
     }
 
     @ResponseStatus(HttpStatus.OK)
