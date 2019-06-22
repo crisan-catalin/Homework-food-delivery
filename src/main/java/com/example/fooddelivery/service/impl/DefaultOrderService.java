@@ -1,5 +1,6 @@
 package com.example.fooddelivery.service.impl;
 
+import com.example.fooddelivery.builder.impl.DefaultOrderBuilder;
 import com.example.fooddelivery.enums.DeliveryStatus;
 import com.example.fooddelivery.exceptions.EntityNotFoundException;
 import com.example.fooddelivery.model.Address;
@@ -14,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,17 +36,11 @@ public class DefaultOrderService implements OrderService {
     @Override
     @Transactional
     public void createOrder(User customer, Address customerAddress, Set<OrderEntry> entries) {
-        Order order = new Order();
-        order.setDeliveryStatus(DeliveryStatus.PLACED);
-        order.setCustomer(customer);
-        order.setDeliveryAddress(customerAddress);
-
-        entries.forEach(entry -> entry.setOrder(order));
-        order.setOrderEntries(entries);
-
-        Long orderTotalPrice = entries.stream()
-                .mapToLong(entry -> entry.getProduct().getPrice() * entry.getQuantity()).sum();
-        order.setTotalPrice(orderTotalPrice);
+        final Order order = new DefaultOrderBuilder()
+                .setCustomer(customer)
+                .setDeliveryAddress(customerAddress)
+                .setEntries(entries)
+                .build();
 
         addressRepository.save(customerAddress);
         orderRepository.save(order);
