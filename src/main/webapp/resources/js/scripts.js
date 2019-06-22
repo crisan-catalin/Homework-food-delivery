@@ -36,7 +36,7 @@ $('.js-restaurant-select').change(function () {
             '   <b class="card-title">' + product.name + '</b>' +
             '   <p class="card-text">Price: ' + product.price + ' $</p>' +
             '   <div class="input-group">' +
-            '    <input type="number" name="product-quantity" value=0 class="form-control" placeholder="Quantity">' +
+            '    <input type="number" name="product-quantity" min=0 value=0 class="form-control" placeholder="Quantity">' +
             '   </div>' +
             '  </div>' +
             ' </div>' +
